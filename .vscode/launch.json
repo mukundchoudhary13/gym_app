@@ -1,0 +1,29 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "gym_app",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "gym_app (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "gym_app (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "Flutter (ONEPLUS A6010)",
+            "program": "lib/main.dart",
+            "deviceId": "a00b5bdb",
+            "request": "launch",
+            "type": "dart"
+        }
+    ]
+}
