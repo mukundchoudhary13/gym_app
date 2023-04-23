@@ -9,6 +9,7 @@ class TextDecor extends InputDecoration {
           suffixIcon: suffixIcon,
           filled: true,
           fillColor: Colors.blueGrey.shade100,
+
           hintText: hintTexts,
           errorStyle: const TextStyle(
               fontFamily: "ReadexPro", fontWeight: FontWeight.w400),

@@ -2,8 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:gym_app/views/navigationbar.dart';
+import 'package:gym_app/views/timeline.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'views/Credential_Pages/Credential_Pages/signin_page/signin_page.dart';
 import 'views/MainPage/mainpage.dart';
+import 'package:pedometer/pedometer.dart';
+import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -16,6 +22,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await Hive.initFlutter();
+  await Hive.openBox('timeline');
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   NotificationSettings settings = await messaging.requestPermission(
     alert: true,
@@ -59,6 +67,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     User? currentuser = FirebaseAuth.instance.currentUser;
 
+
     return MaterialApp(
       title: 'mukund',
       theme: ThemeData(
@@ -72,29 +81,22 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.red,
+        useMaterial3: true,
       ),
-      home: currentuser == null
+      home:
+        // MyHomePage(title: "sdjn")
+
+
+      currentuser == null
           ? Signin()
           : currentuser.emailVerified
-              ? MainPage()
+              ? NavigatorBarPage()
               : Signin(),
     );
   }
 }
 
-class MyHome extends StatefulWidget {
-  const MyHome({super.key});
 
-  @override
-  State<MyHome> createState() => _MyHomeState();
-}
-
-class _MyHomeState extends State<MyHome> {
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text("Hello"));
-  }
-}
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -115,6 +117,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+
+  final collection = Hive.box('timeline');
+
+
+
+
   int _counter = 0;
 
   void _incrementCounter() {
@@ -127,6 +136,23 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });
   }
+
+  void putdata(){
+    collection.put(_counter.toString(), {
+
+        'breakfast':["oatmeal",_counter.toString()],
+        'lunch':["fish and rice"],
+    'evening snack':["poha and chai"],
+    'dinner':["butter chicken"]
+    });
+
+
+    print("Inside");
+    for(int i=0;i<_counter;i++){
+      print(collection.get(i.toString()));
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +188,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            MyHome(),
+
             const Text(
               'You have pushed the button this many times:',
             ),
@@ -170,6 +196,8 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+
+            ElevatedButton(onPressed: putdata, child: Text("Put data"))
           ],
         ),
       ),
@@ -178,6 +206,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
+
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

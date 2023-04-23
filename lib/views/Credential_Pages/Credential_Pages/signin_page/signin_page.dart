@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gym_app/Constants/constant.dart';
 import 'package:gym_app/Constants/widget.dart';
@@ -13,6 +14,7 @@ import 'package:gym_app/Services/Firebase/database_functions.dart';
 import 'package:gym_app/views/Credential_Pages/Credential_Pages/signin_page/forget_password.dart';
 import 'package:gym_app/views/Credential_Pages/Credential_Pages/signup_pageview/signup_page.dart';
 import 'package:gym_app/views/MainPage/mainpage.dart';
+import 'package:gym_app/views/timeline.dart';
 
 class Signin extends StatefulWidget {
   const Signin({Key? key}) : super(key: key);
@@ -24,11 +26,11 @@ class Signin extends StatefulWidget {
 class _SigninState extends State<Signin> {
   String email = '';
   String password = '';
+  final _formkey = GlobalKey<FormState>();
   String? emailErrorMessage;
   String? passwordErrorMessage;
   String? errorMessage;
   bool isSignin = true;
-  final _formkey = GlobalKey<FormState>();
   bool _passwordVisible = true;
 
   @override
@@ -151,7 +153,7 @@ class _SigninState extends State<Signin> {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => MainPage(),
+                            builder: (context) => TimelinePage(),
                           ));
                     } else if (signInStatus ==
                         AuthResultStatus.emailIsNotVerified) {
@@ -238,7 +240,7 @@ class _SigninState extends State<Signin> {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MainPage(),
+                              builder: (context) => TimelinePage(),
                             ));
                       }
                     },
