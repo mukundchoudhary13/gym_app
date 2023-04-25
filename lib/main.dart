@@ -23,7 +23,11 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await Hive.initFlutter();
+  //HIVE DATABASE TIMELINE
   await Hive.openBox('timeline');
+
+
+  // FIREBASE NOTIFICATION
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   NotificationSettings settings = await messaging.requestPermission(
     alert: true,
@@ -48,17 +52,6 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-class MyPage1 extends StatelessWidget {
-  const MyPage1({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-
-    return Container();
-  }
-}
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -69,6 +62,7 @@ class MyApp extends StatelessWidget {
 
 
     return MaterialApp(
+      // THIS TITLE IS DISPLAYED WHEN PUT IN RECENT APP
       title: 'mukund',
       theme: ThemeData(
         // This is the theme of your application.

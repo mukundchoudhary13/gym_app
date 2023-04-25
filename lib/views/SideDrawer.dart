@@ -24,7 +24,9 @@ class SideDrawer extends StatelessWidget {
             decoration: BoxDecoration(
               color: Color(0xFF4444E7),
             ),
-            child: Text('Hello User'),
+            child: Text("Mukund Choudhary" , style: TextStyle(
+              color: Colors.white,
+            ),)
           ),
           ListTile(
             title: Text('Profile'),
@@ -54,14 +56,14 @@ class SideDrawer extends StatelessWidget {
             },
           ),
 
-          ListTile(
-            title: Text('Workout Timer'),
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => WorkoutTimer()));
-              // Update the state of the app.
-              // ...
-            },
-          ),
+          // ListTile(
+          //   title: Text('Workout Timer'),
+          //   onTap: () {
+          //     Navigator.push(context, MaterialPageRoute(builder: (context) => WorkoutTimer()));
+          //     // Update the state of the app.
+          //     // ...
+          //   },
+          // ),
 
           // ListTile(
           //   title: Text('Progress Chart'),

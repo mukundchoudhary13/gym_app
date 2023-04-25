@@ -10,8 +10,8 @@ class GuidePage extends StatefulWidget {
 class _GuidePageState extends State<GuidePage> {
 
   // insert image and their title here
-  List<String> text =["100g Oats"];
-  List<String> imagepath= ["assets/oats.jpg"];
+  List<String> text =["100g Oats","Poha 100gs","salad","boiled eggs","Fish Rice","Protien Rich Foods"];
+  List<String> imagepath= ["assets/oats.jpg","assets/poha.jpg","assets/salad.jpg","assets/eggs.jpg","assets/protien.png"];
 
 
   @override

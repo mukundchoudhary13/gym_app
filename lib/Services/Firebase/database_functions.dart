@@ -1,32 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Database {
-  create(
+  createBasicInfo(
       String collectionName,
       String documentName,
-      String firstname,
-      String lastname,
-      String gender,
+      String name,
       int age,
-      String phoneNumber,
-      String careGiverFirstName,
-      String careGiverLastName,
-      String careGiverPhoneNo) async {
+      int weight,
+      int height,
+      int bmi,
+      int duration,
+      String id
+      ) async {
     await FirebaseFirestore.instance
         .collection(collectionName)
         .doc(documentName)
         .set({
-      'firstname': firstname,
-      'lastname': lastname,
-      'gender': gender,
+      'Name': name,
+      'Height (cm)': height,
+
+      'bmi': bmi,
       'age': age,
-      'UserPhoneNumber': phoneNumber,
-      'CareGiverFirstName': careGiverFirstName,
-      'CareGiverLastName': careGiverLastName,
-      'CareGiverPhoneno': careGiverPhoneNo,
-      'Bluetooth MAC Address': "00:00:00:00:00:00",
-      'Total Epilepsy Detected': 0
-    });
+      'Weight (cm)':weight,
+      'duration':duration
+
+    }).then((value) => createFoodPlan(collectionName, documentName, "plan", true, duration,id));
     // print("Database Updated");
   }
 
@@ -40,9 +38,9 @@ class Database {
   }
 
   delete(
-    String collectionName,
-    String documentName,
-  ) async {
+      String collectionName,
+      String documentName,
+      ) async {
     await FirebaseFirestore.instance
         .collection(collectionName)
         .doc(documentName)
@@ -50,17 +48,20 @@ class Database {
     // print("Document Deleted");
   }
 
-  createEpilepsyHistory(String collectionName, String documentName,
-      String collectionHistoryName, int seizureDuration) async {
+  createFoodPlan(String collectionName, String documentName,
+      String collectionHistoryName, bool isPending,int duration,String id) async {
     late String uid;
     await FirebaseFirestore.instance
         .collection(collectionName)
         .doc(documentName)
         .collection(collectionHistoryName)
         .add({
-      'Real Seizure': true,
-      'Seizure Duration (sec)': seizureDuration,
-      'Time': DateTime.now()
+      'pending': isPending,
+      'Lunch': [""],
+      'Dinner': [""],
+      'Snack':[""],
+      'BreakFast':[""],
+      'id':id
     }).then((value) {
       // print("???????Bhai?????");
       // print(value.id);
@@ -69,21 +70,7 @@ class Database {
     return uid;
   }
 
-  updateEpilepsyHistory(
-      String collectionName,
-      String documentName,
-      String collectionHistoryName,
-      String uidHistory,
-      field,
-      var newFieldValue) async {
-    await FirebaseFirestore.instance
-        .collection(collectionName)
-        .doc(documentName)
-        .collection(collectionHistoryName)
-        .doc(uidHistory)
-        .update({field: newFieldValue});
-    // print("Fields Updated");
-  }
+
 
   Future<bool?> formDataIsExists(String userId) async {
     bool exists = false;
@@ -100,36 +87,4 @@ class Database {
     return exists;
   }
 
-  Future<int?> getExistingDetectionValue(String userId) async {
-    int? totalDetection;
-    await FirebaseFirestore.instance
-        .collection('info')
-        .doc(userId)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) {
-        totalDetection = documentSnapshot.get("Total Epilepsy Detected") as int;
-      }
-    });
-    return totalDetection;
-  }
-
-  Future<List<String?>> getContact(String userId) async {
-    List<String?> details = []..length = 3;
-
-    await FirebaseFirestore.instance
-        .collection('info')
-        .doc(userId)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) {
-        details[0] = documentSnapshot.get("firstname") as String;
-        details[1] = documentSnapshot.get("CareGiverPhoneno") as String;
-        details[2] =
-            documentSnapshot.get("gender") as String == "Male" ? "He" : "She";
-      }
-    });
-
-    return details;
-  }
 }

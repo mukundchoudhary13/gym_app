@@ -78,71 +78,91 @@ class _pedometerState extends State<pedometer> {
           title: const Text('Pedometer'),
 
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'DAILY GOAL 1000',
-                style: TextStyle(fontSize: 15),
-              ),
-
-
-              Text(
-                'Steps taken:',
-                style: TextStyle(fontSize: 30),
-              ),
-              Text(
-                _steps,
-                style: TextStyle(fontSize: 60),
-              ),
-              Divider(
-                height: 100,
-                thickness: 0,
-                color: Colors.white,
-              ),
-              Text(
-                'Pedestrian status:',
-                style: TextStyle(fontSize: 30),
-              ),
-
-              Icon(
-                _status == 'walking'
-                    ? Icons.directions_walk
-                    : _status == 'stopped'
-                    ? Icons.accessibility_new
-                    : Icons.error,
-                size: 100,
-              ),
-              Center(
-                child: Text(
-                  _status,
-                  style: _status == 'walking' || _status == 'stopped'
-                      ? TextStyle(fontSize: 30)
-                      : TextStyle(fontSize: 20, color: Colors.red),
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'DAILY GOAL 1000',
+                  style: TextStyle(fontSize: 15),
                 ),
-              ),
 
 
-
-              ListTile(
-
-            title: Text("How many calories do you burn from 10,000 steps?"),
-                subtitle: Column(
-                  children: [
-                    Text
-                      ( "Any estimation of how many calories you burn from an exercise like walking or running depends on how heavy you are. On average, heavier people use more energy to move than lighter people. Most rough estimates revolve around 100 calories burned per mile for a 180-pound person."
-                    ),
-                    Text("How many miles are 10,000 steps? On average, 10,000 steps are going to come out to be roughly 5 miles. So assuming you weigh 180 pounds, then yes, by simple mathematics, 100 calories x 5 miles equals 500 calories. Over a week, that becomes 3,500 calories."),
-                    Text("But if you are lighter or heavier, you will burn less/more calories while taking the same number of steps or walking the same distance."),
-                  ],
+                Text(
+                  'Steps taken:',
+                  style: TextStyle(fontSize: 30),
                 ),
+                Text(
+                  _steps,
+                  style: TextStyle(fontSize: 60),
+                ),
+                Divider(
+                  height: 100,
+                  thickness: 0,
+                  color: Colors.white,
+                ),
+                Text(
+                  'Pedestrian status:',
+                  style: TextStyle(fontSize: 30),
+                ),
+
+                Icon(
+                  _status == 'walking'
+                      ? Icons.directions_walk
+                      : _status == 'stopped'
+                      ? Icons.accessibility_new
+                      : Icons.error,
+                  size: 100,
+                ),
+                Center(
+                  child: Text(
+                    _status,
+                    style: _status == 'walking' || _status == 'stopped'
+                        ? TextStyle(fontSize: 30)
+                        : TextStyle(fontSize: 20, color: Colors.red),
+                  ),
+                ),
+
+
+
+                ListTile(
+
+              title: Text("How many calories do you burn from 10,000 steps?"),
+
+                  subtitle: Column(
+
+                    children: [
+                      Card(
+                        elevation: 4,
+                        margin: EdgeInsets.all(10.0),
+                        child: ClipRect(
+                          clipBehavior: Clip.antiAlias,
+                          child: Column(children: [
+                            Image.asset(
+                              "assets/stepsdata.png",
+
+                              fit: BoxFit.fitWidth,
+
+                            ),
+
+                          ],),
+                        ),),
+                      Text
+                        ( "Any estimation of how many calories you burn from an exercise like walking or running depends on how heavy you are. On average, heavier people use more energy to move than lighter people. Most rough estimates revolve around 100 calories burned per mile for a 180-pound person."
+                      ),
+                      Text("How many miles are 10,000 steps? On average, 10,000 steps are going to come out to be roughly 5 miles. So assuming you weigh 180 pounds, then yes, by simple mathematics, 100 calories x 5 miles equals 500 calories. Over a week, that becomes 3,500 calories."),
+                      Text("But if you are lighter or heavier, you will burn less/more calories while taking the same number of steps or walking the same distance."),
+                    ],
+                  ),
 
       )
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
+

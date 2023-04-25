@@ -20,6 +20,8 @@ class _BmiPageState extends State<BmiPage> {
   int weight = 80;
   String gender ="";
   String bmi="";
+  String bmiText = "";
+  String bmiReason = "";
 
 
 
@@ -27,6 +29,8 @@ class _BmiPageState extends State<BmiPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
+
+
           child: Column(
 
             children:[
@@ -113,14 +117,45 @@ class _BmiPageState extends State<BmiPage> {
 
               ElevatedButton(onPressed: (){
                 Calculate cal = Calculate(height: height, weight: weight);
-                bmi = cal.result();
                 setState(() {
+                bmi = cal.result();
+                bmiText = cal.getText();
+                bmiReason = cal.getAdvise();
 
                 });
 
               }, child: Text("Calculate")),
               Text("BMI"),
               Text(bmi),
+              Text(bmiText),
+              Text(bmiReason),
+
+              ListTile(
+
+                subtitle: Column(
+
+                  children: [
+                    Card(
+                      elevation: 4,
+                      margin: EdgeInsets.all(10.0),
+                      child: ClipRect(
+                        clipBehavior: Clip.antiAlias,
+                        child: Column(children: [
+                          Image.asset(
+                            "assets/bmi.png",
+
+                            fit: BoxFit.fitWidth,
+
+                          ),
+
+                        ],),
+                      ),),
+
+                  ],
+                ),
+
+              )
+
 
             ],
 
