@@ -23,7 +23,7 @@ class SideDrawer extends StatelessWidget {
         children: <Widget>[
           UserAccountsDrawerHeader(
             accountEmail: Text(currentuser!.email!),
-            accountName: Text(currentuser!.displayName!),
+            accountName: Text(currentuser!.displayName !=null ?  currentuser!.displayName!: currentuser!.email!.split("@").first),
             currentAccountPicture: currentuser!.photoURL != null ? CircleAvatar(backgroundImage:   NetworkImage(currentuser!.photoURL!)): CircleAvatar(child: Text(currentuser!.email![0].toUpperCase(),style: TextStyle(fontSize:25 ),),),
           ),
 

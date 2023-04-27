@@ -159,217 +159,219 @@ class _PlanState extends State<Plan> {
             builder: (BuildContext context) {
               return Container(
                 height: _height-80,
-                child: Column(
+                child: SingleChildScrollView(
+                  child: Column(
 
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      const Text('Create Plan',style: TextStyle(fontSize: 25),),
-                      Form(
-                        key: _formkey,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextFormField(
-                                style: TextStyle(fontWeight: FontWeight.w400),
-                                keyboardType: TextInputType.emailAddress,
-                                key: ValueKey('id'),
-                                decoration: InputDecoration(
-                                  labelText: "Plan name",
-                                  border: OutlineInputBorder()
-                                  ,
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        const Text('Create Plan',style: TextStyle(fontSize: 25),),
+                        Form(
+                          key: _formkey,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  style: TextStyle(fontWeight: FontWeight.w400),
+                                  keyboardType: TextInputType.emailAddress,
+                                  key: ValueKey('id'),
+                                  decoration: InputDecoration(
+                                    labelText: "Plan name",
+                                    border: OutlineInputBorder()
+                                    ,
 
+                                  ),
+                                  validator: (value) {
+                                    return null;
+                                  },
+                                  onSaved: (value) {
+                                    setState(() {
+                                      id = value!;
+                                    });
+                                  },
                                 ),
-                                validator: (value) {
-                                  return null;
-                                },
-                                onSaved: (value) {
-                                  setState(() {
-                                    id = value!;
-                                  });
-                                },
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextFormField(
-                                style: TextStyle(fontWeight: FontWeight.w400),
-                                keyboardType: TextInputType.emailAddress,
-                                key: ValueKey('name'),
-                                decoration: InputDecoration(
-                                  labelText: "Name",
-                                  border: OutlineInputBorder()
-                                  ,
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  style: TextStyle(fontWeight: FontWeight.w400),
+                                  keyboardType: TextInputType.emailAddress,
+                                  key: ValueKey('name'),
+                                  decoration: InputDecoration(
+                                    labelText: "Name",
+                                    border: OutlineInputBorder()
+                                    ,
 
+                                  ),
+                                  validator: (value) {
+                                    return null;
+                                  },
+                                  onSaved: (value) {
+                                    setState(() {
+                                      name = value!;
+                                    });
+                                  },
                                 ),
-                                validator: (value) {
-                                  return null;
-                                },
-                                onSaved: (value) {
-                                  setState(() {
-                                    name = value!;
-                                  });
-                                },
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextFormField(
-                                style: TextStyle(fontWeight: FontWeight.w400),
-                                keyboardType: TextInputType.emailAddress,
-                                key: ValueKey('age'),
-                                decoration: InputDecoration(
-                                  labelText: "age",
-                                  border: OutlineInputBorder()
-                                  ,
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  style: TextStyle(fontWeight: FontWeight.w400),
+                                  keyboardType: TextInputType.emailAddress,
+                                  key: ValueKey('age'),
+                                  decoration: InputDecoration(
+                                    labelText: "age",
+                                    border: OutlineInputBorder()
+                                    ,
 
+                                  ),
+                                  validator: (value) {
+                                    return null;
+                                  },
+                                  onSaved: (value) {
+                                    setState(() {
+                                      age = int.parse(value!);
+                                    });
+                                  },
                                 ),
-                                validator: (value) {
-                                  return null;
-                                },
-                                onSaved: (value) {
-                                  setState(() {
-                                    age = int.parse(value!);
-                                  });
-                                },
                               ),
-                            ),
 
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextFormField(
-                                style: TextStyle(fontWeight: FontWeight.w400),
-                                keyboardType: TextInputType.emailAddress,
-                                key: ValueKey('weight'),
-                                decoration: InputDecoration(
-                                  labelText: "Weight",
-                                  border: OutlineInputBorder()
-                                  ,
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  style: TextStyle(fontWeight: FontWeight.w400),
+                                  keyboardType: TextInputType.emailAddress,
+                                  key: ValueKey('weight'),
+                                  decoration: InputDecoration(
+                                    labelText: "Weight",
+                                    border: OutlineInputBorder()
+                                    ,
 
+                                  ),
+                                  validator: (value) {
+                                    return null;
+                                  },
+                                  onSaved: (value) {
+                                    setState(() {
+                                      weight = int.parse(value!);
+                                    });
+                                  },
                                 ),
-                                validator: (value) {
-                                  return null;
-                                },
-                                onSaved: (value) {
-                                  setState(() {
-                                    weight = int.parse(value!);
-                                  });
-                                },
                               ),
-                            ),
 
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextFormField(
-                                style: TextStyle(fontWeight: FontWeight.w400),
-                                keyboardType: TextInputType.emailAddress,
-                                key: ValueKey('height'),
-                                decoration: InputDecoration(
-                                  labelText: "Height",
-                                  border: OutlineInputBorder()
-                                  ,
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  style: TextStyle(fontWeight: FontWeight.w400),
+                                  keyboardType: TextInputType.emailAddress,
+                                  key: ValueKey('height'),
+                                  decoration: InputDecoration(
+                                    labelText: "Height",
+                                    border: OutlineInputBorder()
+                                    ,
 
+                                  ),
+                                  validator: (value) {
+                                    return null;
+                                  },
+
+                                  onSaved: (value) {
+                                    setState(() {
+                                      height = int.parse(value!);
+
+
+                                    });
+                                  },
                                 ),
-                                validator: (value) {
-                                  return null;
-                                },
-
-                                onSaved: (value) {
-                                  setState(() {
-                                    height = int.parse(value!);
-
-
-                                  });
-                                },
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextFormField(
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
 
-                                style: TextStyle(fontWeight: FontWeight.w400),
-                                keyboardType: TextInputType.emailAddress,
-                                key: ValueKey('bmi'),
-                                decoration: InputDecoration(
-                                  labelText: "Bmi",
-                                  border: OutlineInputBorder()
-                                  ,
+                                  style: TextStyle(fontWeight: FontWeight.w400),
+                                  keyboardType: TextInputType.emailAddress,
+                                  key: ValueKey('bmi'),
+                                  decoration: InputDecoration(
+                                    labelText: "Bmi",
+                                    border: OutlineInputBorder()
+                                    ,
 
+                                  ),
+                                  validator: (value) {
+                                    return null;
+                                  },
+                                  onSaved: (value) {
+                                    setState(() {
+                                      bmi = int.parse(value!);
+                                    });
+                                  },
                                 ),
-                                validator: (value) {
-                                  return null;
-                                },
-                                onSaved: (value) {
-                                  setState(() {
-                                    bmi = int.parse(value!);
-                                  });
-                                },
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextFormField(
-                                style: TextStyle(fontWeight: FontWeight.w400),
-                                keyboardType: TextInputType.emailAddress,
-                                key: ValueKey('calories'),
-                                decoration: InputDecoration(
-                                  labelText: "Calories",
-                                  border: OutlineInputBorder()
-                                  ,
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  style: TextStyle(fontWeight: FontWeight.w400),
+                                  keyboardType: TextInputType.emailAddress,
+                                  key: ValueKey('calories'),
+                                  decoration: InputDecoration(
+                                    labelText: "Calories",
+                                    border: OutlineInputBorder()
+                                    ,
 
+                                  ),
+                                  validator: (value) {
+                                    return null;
+                                  },
+                                  onSaved: (value) {
+                                    setState(() {
+                                      calories = int.parse(value!);
+                                    });
+                                  },
                                 ),
-                                validator: (value) {
-                                  return null;
-                                },
-                                onSaved: (value) {
-                                  setState(() {
-                                    calories = int.parse(value!);
-                                  });
-                                },
                               ),
-                            ),
 
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextFormField(
-                                style: TextStyle(fontWeight: FontWeight.w400),
-                                keyboardType: TextInputType.emailAddress,
-                                key: ValueKey('duration'),
-                                decoration: InputDecoration(
-                                  labelText: "Duration",
-                                  border: OutlineInputBorder()
-                                  ,
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  style: TextStyle(fontWeight: FontWeight.w400),
+                                  keyboardType: TextInputType.emailAddress,
+                                  key: ValueKey('duration'),
+                                  decoration: InputDecoration(
+                                    labelText: "Duration",
+                                    border: OutlineInputBorder()
+                                    ,
 
+                                  ),
+                                  validator: (value) {
+                                    return null;
+                                  },
+                                  onSaved: (value) {
+                                    setState(() {
+                                      duration = int.parse(value!);
+                                    });
+                                  },
                                 ),
-                                validator: (value) {
-                                  return null;
-                                },
-                                onSaved: (value) {
-                                  setState(() {
-                                    duration = int.parse(value!);
-                                  });
-                                },
                               ),
-                            ),
-                            Container(
-                                padding: EdgeInsets.all(10),
-                                width: 400,
-                                child: ElevatedButton(onPressed: ()async{
+                              Container(
+                                  padding: EdgeInsets.all(10),
+                                  width: 400,
+                                  child: ElevatedButton(onPressed: ()async{
 
-                                  if (_formkey.currentState!.validate()) {
-                                    _formkey.currentState!.save();
+                                    if (_formkey.currentState!.validate()) {
+                                      _formkey.currentState!.save();
 
 
-                                    await Database().createBasicInfo("calories", currentuser!.uid, name, age!, weight!, height!, bmi!, duration!,id!,calories!);
-                                    Navigator.pop(context);
-                                  }
-                                }, child: Text("Submit")))
-                          ],
+                                      await Database().createBasicInfo("calories", currentuser!.uid, name, age!, weight!, height!, bmi!, duration!,id!,calories!);
+                                      Navigator.pop(context);
+                                    }
+                                  }, child: Text("Submit")))
+                            ],
+                          ),
                         ),
-                      ),
-                    ]),
+                      ]),
+                ),
               );
             },
           );

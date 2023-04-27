@@ -29,7 +29,7 @@ class _TimelinePageState extends State<TimelinePage> {
 
   MLPClassifier ?mExercise;
   MLPClassifier ?mSet;
-  
+
   String exercisePredict = "";
 
 
@@ -176,48 +176,51 @@ class _TimelinePageState extends State<TimelinePage> {
 
   };
   load() async {
+
     await loadModel("assets/fitness.json").then((x) {
-      mExercise = MLPClassifier.fromMap(json.decode(x));
+      setState(() {
+
+        mExercise = MLPClassifier.fromMap(json.decode(x));
+      });
     });
 
     await loadModel("assets/fitnessSet.json").then((x) {
-      mSet = MLPClassifier.fromMap(json.decode(x));
+      setState(() {
+
+        mSet = MLPClassifier.fromMap(json.decode(x));
+      });
     });
+
+
+
+
 
   }
 
 
+  List<String> exer = ['Barbell Rows', 'Bench Press', 'Bicep Curls', 'Bicycle Crunches',
+    'Cable Tricep Pushdown', 'Calf Raises', 'Chin-ups',
+    'Close Grip Bench Press', 'Deadlift', 'Dumbbell Rows',
+    'Dumbbell Shoulder Press', 'Dumbbell Tricep Extension',
+    'Incline Bench Press', 'Incline Dumbbell Bench Press',
+    'Lat Pulldown', 'Leg Press', 'Lunges', 'Overhead Press', 'Plank',
+    'Pull-ups', 'Squat', 'Sun Salutation', 'T-Bar Rows',
+    'Treadmill Running', 'Tricep Dips', 'Tricep Kickbacks',
+    'Tricep Rope Pushdowns', 'Warrior II'];
 
-  Map<int,String> ExerciseData ={
-    0: '50 Free Squats ',
-    1:'10 weighted squats',
-    2:'Leg Press',
-    3:'Leg Curl',
-    4:'SHOULDERS',
-    5:'Seated Dumbbell Press',
-    6:'Upright Row',
-    7:'Lateral Raises',
-    8:'Squats',
-    9:'Pushups',
-    10:'Flat Dumbbell chest press',
-    11:'Incline dumbbell chest fly',
-    12:'Chest Machine fly',
-    13:'25 Pushups',
-    14:'Bent-Over Dumbbell Triceps Kickback',
-    15:'Dumbbell Overhead Triceps',
-    16: 'Triceps Dips',
-    17: 'Triceps pushdown Cable',
-    18:'Free Squats',
-    19:'Weighted Squats',
-    20:'Flat Dumbbell Chest Press',
-    21:'Incline Dumbbell Chest Fly',
-    22:'Chest Machine Fly',
-    23:'Triceps Pushdown Cable'
-  };
+   Map<int, String> listToMap(List<String> list) {
+    final myMap = <int, String>{};
+    for (var i = 0; i < list.length; i++) {
+      myMap[i] = list[i];
+    }
 
+    return myMap;
+  }
+
+  late Map<int,String> ExerciseData =listToMap(exer);
 
   void timeLine(){
-   final timeLineCard= timelineCollection.get(currentuser.uid);
+    final timeLineCard= timelineCollection.get(currentuser.uid);
     if(timeLineCard !=null){
 
       List<String> breakfastitt = timeLineCard["breakfast"];
@@ -227,7 +230,7 @@ class _TimelinePageState extends State<TimelinePage> {
 
       DateTime validation = timeLineCard["valid"];
 
-     int total_cal = timeLineCard["total_calories"];
+      int total_cal = timeLineCard["total_calories"];
 
       if(validation.isBefore(DateTime.now()) ==false){
         fooditems.update(0, (value) => breakfastitt);
@@ -252,10 +255,10 @@ class _TimelinePageState extends State<TimelinePage> {
     }else{
       setState(() {
 
-      fooditems.update(0, (value) => []);
-      fooditems.update(1, (value) => []);
-      fooditems.update(2, (value) => []);
-      fooditems.update(3, (value) => []);
+        fooditems.update(0, (value) => []);
+        fooditems.update(1, (value) => []);
+        fooditems.update(2, (value) => []);
+        fooditems.update(3, (value) => []);
 
       });
     }
@@ -266,8 +269,8 @@ class _TimelinePageState extends State<TimelinePage> {
 
   @override
   void initState() {
-    timeLine();
     load();
+    timeLine();
     setState(() {
       selectedDate = DateTime.now();
       var timeLineItem=  timelineCollection.get(selectedDate!.toIso8601String().split("T").first);
@@ -316,89 +319,71 @@ class _TimelinePageState extends State<TimelinePage> {
 
     StandardScaler standardScaler = StandardScaler();
 
-    List<List<double>> X = [[0.0, 19.0, 13.0, 26.0],
-      [1.0, 24.0, 64.0, 23.0],
-      [0.0, 30.0, 84.0, 22.0],
-      [0.0, 31.0, 48.0, 38.0],
-      [1.0, 20.0, 33.0, 18.0],
-      [0.0, 29.0, 79.0, 25.0],
-      [0.0, 26.0, 185.0, 30.0],
-      [0.0, 22.0, 26.0, 18.0],
-      [0.0, 24.0, 35.0, 25.0],
-      [0.0, 19.0, 145.0, 22.0],
-      [1.0, 27.0, 88.0, 27.0],
-      [0.0, 22.0, 171.0, 19.0],
-      [0.0, 20.0, 27.0, 23.0],
-      [1.0, 23.0, 150.0, 27.0],
-      [1.0, 25.0, 130.0, 28.0],
-      [0.0, 28.0, 113.0, 29.0],
-      [0.0, 25.0, 141.0, 25.0],
-      [1.0, 29.0, 170.0, 30.0],
-      [0.0, 31.0, 95.0, 21.0],
-      [1.0, 22.0, 161.0, 27.0],
-      [0.0, 30.0, 24.0, 28.0],
-      [1.0, 25.0, 12.0, 42.0],
-      [1.0, 23.0, 189.0, 25.0],
-      [0.0, 30.0, 67.0, 29.0],
-      [1.0, 25.0, 182.0, 22.0],
-      [0.0, 25.0, 113.0, 22.0],
-      [0.0, 25.0, 71.0, 30.0],
-      [1.0, 30.0, 54.0, 25.0],
-      [0.0, 30.0, 139.0, 40.0],
-      [1.0, 28.0, 149.0, 22.0],
-      [1.0, 22.0, 123.0, 26.0],
-      [0.0, 25.0, 84.0, 26.0],
-      [1.0, 21.0, 191.0, 26.0],
-      [1.0, 26.0, 196.0, 19.0],
-      [1.0, 24.0, 64.0, 19.0],
-      [1.0, 18.5, 36.0, 35.0],
-      [0.0, 28.0, 88.0, 22.0],
-      [1.0, 30.0, 110.0, 24.0],
-      [1.0, 26.0, 70.0, 21.0],
-      [1.0, 22.0, 114.0, 18.0],
-      [1.0, 27.0, 69.0, 18.0],
-      [1.0, 21.0, 75.0, 18.0],
-      [1.0, 30.0, 54.0, 30.0],
-      [0.0, 26.0, 23.0, 22.0],
-      [0.0, 30.0, 100.0, 18.0],
-      [0.0, 22.0, 21.0, 29.0],
-      [0.0, 21.0, 116.0, 27.0],
-      [0.0, 25.0, 164.0, 24.0],
-      [1.0, 22.0, 47.0, 22.0],
-      [0.0, 24.0, 109.0, 20.0],
-      [1.0, 24.0, 147.0, 19.0],
-      [1.0, 20.0, 42.0, 29.0],
-      [0.0, 30.0, 187.0, 26.0],
-      [0.0, 29.0, 140.0, 26.0],
-      [1.0, 28.0, 23.0, 23.0],
-      [1.0, 24.0, 38.0, 20.0],
-      [0.0, 19.0, 188.0, 25.0],
-      [1.0, 22.0, 24.0, 22.0],
-      [1.0, 20.0, 84.0, 26.0],
-      [0.0, 30.0, 177.0, 20.0],
-      [0.0, 25.0, 166.0, 20.0],
-      [1.0, 22.0, 144.0, 18.0],
-      [0.0, 22.0, 84.0, 18.0],
-      [1.0, 18.5, 18.0, 30.0],
-      [0.0, 24.0, 80.0, 29.0],
-      [1.0, 19.0, 39.0, 29.0],
-      [1.0, 21.0, 91.0, 28.0],
-      [1.0, 25.0, 134.0, 25.0],
-      [0.0, 23.0, 176.0, 23.0],
-      [1.0, 22.0, 140.0, 24.0],
-      [1.0, 19.0, 153.0, 20.0],
-      [0.0, 20.0, 32.0, 18.0],
-      [0.0, 21.0, 159.0, 30.0],
-      [1.0, 22.0, 175.0, 30.0],
-      [1.0, 26.0, 111.0, 19.0],
-      [1.0, 19.0, 167.0, 30.0],
-      [0.0, 30.0, 96.0, 29.0],
-      [1.0, 29.0, 22.0, 19.0],
-      [0.0, 30.0, 104.0, 21.0]];
+    List<List<double>> X =
+    [[0.0, 22.9, 78.0, 31.0],
+      [0.0, 21.6, 162.0, 29.0],
+      [1.0, 23.5, 146.0, 30.0],
+      [1.0, 27.4, 127.0, 37.0],
+      [1.0, 27.2, 139.0, 31.0],
+      [1.0, 25.1, 182.0, 32.0],
+      [0.0, 21.6, 162.0, 29.0],
+      [1.0, 28.1, 97.0, 45.0],
+      [1.0, 23.9, 140.0, 27.0],
+      [1.0, 25.5, 80.0, 30.0],
+      [0.0, 25.4, 116.0, 28.0],
+      [0.0, 23.8, 43.0, 27.0],
+      [1.0, 24.5, 130.0, 32.0],
+      [1.0, 23.7, 55.0, 33.0],
+      [1.0, 22.2, 100.0, 29.0],
+      [0.0, 23.1, 92.0, 33.0],
+      [0.0, 20.3, 120.0, 27.0],
+      [0.0, 21.6, 162.0, 29.0],
+      [0.0, 21.1, 110.0, 28.0],
+      [0.0, 24.5, 132.0, 28.0],
+      [1.0, 27.4, 127.0, 37.0],
+      [0.0, 23.4, 187.0, 26.0],
+      [0.0, 23.9, 120.0, 27.0],
+      [0.0, 24.9, 127.0, 35.0],
+      [0.0, 24.9, 127.0, 35.0],
+      [1.0, 26.8, 69.0, 28.0],
+      [1.0, 27.4, 127.0, 37.0],
+      [0.0, 22.1, 90.0, 33.0],
+      [1.0, 25.1, 182.0, 32.0],
+      [1.0, 28.1, 97.0, 45.0],
+      [0.0, 21.1, 110.0, 28.0],
+      [1.0, 22.5, 110.0, 28.0],
+      [1.0, 25.8, 156.0, 40.0],
+      [1.0, 23.1, 100.0, 35.0],
+      [0.0, 22.3, 58.0, 25.0],
+      [0.0, 23.4, 187.0, 26.0],
+      [0.0, 23.8, 43.0, 27.0],
+      [1.0, 25.8, 156.0, 40.0],
+      [1.0, 24.6, 78.0, 29.0],
+      [1.0, 23.7, 55.0, 33.0],
+      [0.0, 22.9, 78.0, 31.0],
+      [1.0, 24.5, 130.0, 32.0],
+      [0.0, 19.8, 150.0, 31.0],
+      [0.0, 24.5, 132.0, 28.0],
+      [1.0, 26.1, 102.0, 35.0],
+      [0.0, 20.8, 90.0, 33.0],
+      [0.0, 20.3, 120.0, 27.0],
+      [1.0, 22.2, 100.0, 29.0],
+      [0.0, 24.9, 127.0, 35.0],
+      [0.0, 23.1, 92.0, 33.0],
+      [0.0, 22.3, 58.0, 25.0],
+      [1.0, 26.1, 102.0, 35.0],
+      [0.0, 23.8, 43.0, 27.0],
+      [1.0, 28.1, 97.0, 45.0],
+      [0.0, 22.9, 78.0, 31.0],
+      [1.0, 25.1, 182.0, 32.0],
+      [1.0, 21.7, 140.0, 29.0],
+      [0.0, 22.5, 120.0, 30.0],
+      [1.0, 23.5, 146.0, 30.0],
+      [0.0, 25.4, 116.0, 28.0]];
     standardScaler.fit_transform(X);
     // print();
 
-    // print(standardScaler.mean_);
+    print(standardScaler.mean_);
 
 
 
@@ -407,19 +392,24 @@ class _TimelinePageState extends State<TimelinePage> {
 
     // print(mExercise.predict([0,	22	,10,	20]));
     // print(mSet.predict([0,	22	,10,	20]));
+    print("cal");
 
     print(cal);
 
 
-   final scale = standardScaler.transform([[1,26,cal,22]]).first;
+    final scale = standardScaler.transform([[1,26,cal,22]]).first;
+    print(scale);
 
-setState(() {
-    exercisePredict =  ExerciseData[mExercise!.predict(scale)]! + " " + mSet!.predict(scale).toString() + " Sets";
-  
-});
+    print(mExercise!.predict([1,22,100,23]));
 
-return exercisePredict;
-   
+    setState(() {
+      if(mExercise!=null && mSet !=null)
+        exercisePredict =  ExerciseData[mExercise!.predict(scale)]! + " " + mSet!.predict(scale).toString() + " Sets";
+
+    });
+
+    return exercisePredict;
+
 
   }
 
@@ -429,7 +419,7 @@ return exercisePredict;
 
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      drawer: SideDrawer(),
+        drawer: SideDrawer(),
         appBar: CalendarAppBar(
 
           onDateChanged: (value) async {
@@ -440,6 +430,12 @@ return exercisePredict;
             print(selectedDate!.toIso8601String().split("T").first);
 
             var timeLineItem= await  timelineCollection.get(selectedDate!.toIso8601String().split("T").first);
+
+
+
+
+
+
             // print(timeLineItem["breakfast"]. );
 
             if(timeLineItem !=null) {
@@ -508,6 +504,7 @@ return exercisePredict;
                   (index) => DateTime.now()
                   .subtract(Duration(days: index * random.nextInt(5)))),
           backButton: true,
+
 
 
 
@@ -635,19 +632,19 @@ return exercisePredict;
                                     onDismissed: (direction) {
 
                                       setState(() {
-                                      String cal = eventFood[index]![indexx].split(':').last;
-                                      int remCal = int.parse(cal);
-                                      calIntake -= remCal;
+                                        String cal = eventFood[index]![indexx].split(':').last;
+                                        int remCal = int.parse(cal);
+                                        calIntake -= remCal;
 
-                                      eventFood[index]!.removeAt(indexx);
+                                        eventFood[index]!.removeAt(indexx);
 
 
-                                      putdata();
+                                        putdata();
                                       });
                                     },
                                     key: UniqueKey(),
                                     child: ListTile(
-                                        title:Text(eventFood[index]![indexx]),
+                                      title:Text(eventFood[index]![indexx]),
 
 
 
@@ -687,9 +684,9 @@ return exercisePredict;
                 if(calIntake > totalCal)...[
 
 
-Text(predict((calIntake - totalCal ).toDouble()))
+                  Text(predict((calIntake - totalCal ).toDouble()))
 
-                 
+
                 ]
 
 
