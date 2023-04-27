@@ -44,6 +44,7 @@ class _SigninState extends State<Signin> {
 
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Form(
           key: _formkey,
           child: Column(

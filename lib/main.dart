@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:gym_app/views/navigationbar.dart';
-import 'package:gym_app/views/timeline.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'views/Credential_Pages/Credential_Pages/signin_page/signin_page.dart';
 import 'views/MainPage/mainpage.dart';

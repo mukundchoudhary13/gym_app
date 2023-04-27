@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:calendar_appbar/calendar_appbar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:gym_app/views/SideDrawer.dart';
@@ -22,7 +23,7 @@ class _TimelinePageState extends State<TimelinePage> {
   DateTime? selectedDate;
   Random random = new Random();
 
-
+  User  currentuser = FirebaseAuth.instance.currentUser!;
 
   var timelineCollection = Hive.box('timeline');
 
@@ -60,7 +61,7 @@ class _TimelinePageState extends State<TimelinePage> {
   List<String> events=["Breakfast","Lunch","Snack","Dinner"] ;
 
 
-  int totalCal = 1000;
+  int totalCal = 0;
   int calIntake =0;
 
 
@@ -215,8 +216,57 @@ class _TimelinePageState extends State<TimelinePage> {
   };
 
 
+  void timeLine(){
+   final timeLineCard= timelineCollection.get(currentuser.uid);
+    if(timeLineCard !=null){
+
+      List<String> breakfastitt = timeLineCard["breakfast"];
+      List<String> lunchitt = timeLineCard["lunch"];
+      List<String> snackitt = timeLineCard["snack"];
+      List<String> dinneritt = timeLineCard["dinner"];
+
+      DateTime validation = timeLineCard["valid"];
+
+     int total_cal = timeLineCard["total_calories"];
+
+      if(validation.isBefore(DateTime.now()) ==false){
+        fooditems.update(0, (value) => breakfastitt);
+        fooditems.update(1, (value) => lunchitt);
+        fooditems.update(2, (value) => snackitt);
+        fooditems.update(3, (value) => dinneritt);
+
+        totalCal = total_cal;
+      }
+      else{
+        fooditems.update(0, (value) => []);
+        fooditems.update(1, (value) => []);
+        fooditems.update(2, (value) => []);
+        fooditems.update(3, (value) => []);
+        totalCal =0;
+      }
+      setState(() {
+
+      });
+
+
+    }else{
+      setState(() {
+
+      fooditems.update(0, (value) => []);
+      fooditems.update(1, (value) => []);
+      fooditems.update(2, (value) => []);
+      fooditems.update(3, (value) => []);
+
+      });
+    }
+  }
+
+
+
+
   @override
   void initState() {
+    timeLine();
     load();
     setState(() {
       selectedDate = DateTime.now();
@@ -508,7 +558,7 @@ return exercisePredict;
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             mainAxisSize: MainAxisSize.min,
                                             children: <Widget>[
-                                              Expanded(child: ListView(children: fooditems[index]!.map((e) => Card(
+                                              Expanded(child: fooditems[index]!.isEmpty ? Center(child: Image.asset('assets/png.png')):ListView(children: fooditems[index]!.map((e) => Card(
                                                 child : ListTile(title: Text(e),
                                                   onTap: ()async{
                                                     switch(index){

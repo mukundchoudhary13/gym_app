@@ -10,7 +10,8 @@ class Database {
       int height,
       int bmi,
       int duration,
-      String id
+      String id,
+      int calories
       ) async {
     await FirebaseFirestore.instance
         .collection(collectionName)
@@ -24,7 +25,7 @@ class Database {
       'Weight (cm)':weight,
       'duration':duration
 
-    }).then((value) => createFoodPlan(collectionName, documentName, "plan", true, duration,id));
+    }).then((value) => createFoodPlan(collectionName, documentName, "plan", true, duration,id,calories));
     // print("Database Updated");
   }
 
@@ -49,7 +50,7 @@ class Database {
   }
 
   createFoodPlan(String collectionName, String documentName,
-      String collectionHistoryName, bool isPending,int duration,String id) async {
+      String collectionHistoryName, bool isPending,int duration,String id,int calories) async {
     late String uid;
     await FirebaseFirestore.instance
         .collection(collectionName)
@@ -61,7 +62,9 @@ class Database {
       'Dinner': [""],
       'Snack':[""],
       'BreakFast':[""],
-      'id':id
+      'id':id,
+      'duration(days)':duration,
+      'total_calories':calories
     }).then((value) {
       // print("???????Bhai?????");
       // print(value.id);

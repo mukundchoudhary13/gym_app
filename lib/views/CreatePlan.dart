@@ -54,6 +54,7 @@ class _PlanState extends State<Plan> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
+
             children: [Text("Fitness Plan"),
 
 
@@ -68,59 +69,73 @@ class _PlanState extends State<Plan> {
                     return Text("Loading");
                   }
 
-                  return ListView.builder(
-                    itemCount: snapshot.data!.docs.length,
-                    itemBuilder: (context, index) {
+                  if(snapshot.hasData){
+                    if(snapshot.data!.size >0){
 
-                      final data =  snapshot.data!.docs;
+                      return ListView.builder(
+                        itemCount: snapshot.data!.docs.length,
+                        itemBuilder: (context, index) {
 
-                      return Card(
-                        margin: EdgeInsets.all(8.0),
-                        child: InkWell(
-                          onTap: (){
-                            if(data[index]['pending']==false){
-                              final dat = snapshot.data!.docs[index].data() as Map<String,dynamic>;
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => PlanDetail(doc: dat),));
-                            }
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            height: 100,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(data[index]['id'].toString(),style: TextStyle(fontSize: 25),),
-                                if(data[index]['pending'])...[
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Icon(Icons.pending_actions),
-                                      Text("Pending")
-                                    ],
-                                  ),
-                                ]else...[
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
+                          final data =  snapshot.data!.docs;
 
-                                    children: [
-                                      Icon(Icons.done_outlined,color: Colors.green,),
-                                      Text("Ready")
-                                    ],
-                                  ),
-                                ]
+                          return Card(
+                            margin: EdgeInsets.all(8.0),
+                            child: InkWell(
+                              onTap: (){
+                                if(data[index]['pending']==false){
+                                  final dat = snapshot.data!.docs[index].data() as Map<String,dynamic>;
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => PlanDetail(doc: dat),));
+                                }
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                height: 100,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(data[index]['id'].toString(),style: TextStyle(fontSize: 25),),
+                                    if(data[index]['pending'])...[
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Icon(Icons.pending_actions),
+                                          Text("Pending")
+                                        ],
+                                      ),
+                                    ]else...[
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
 
-                              ],
+                                        children: [
+                                          Icon(Icons.done_outlined,color: Colors.green,),
+                                          Text("Ready")
+                                        ],
+                                      ),
+                                    ]
+
+                                  ],
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
+
+                          );
+                        },
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
 
                       );
-                    },
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-
-                  );
+                    }
+                    else{
+                      return Column(
+                        children: [
+                          SizedBox(height: 150,),
+                          Image.asset('assets/png.png'),
+                        ],
+                      );
+                    }
+                  }
+                  return SizedBox();
                 },
               )
 
@@ -347,7 +362,7 @@ class _PlanState extends State<Plan> {
                                     _formkey.currentState!.save();
 
 
-                                    await Database().createBasicInfo("calories", currentuser!.uid, name, age!, weight!, height!, bmi!, duration!,id!);
+                                    await Database().createBasicInfo("calories", currentuser!.uid, name, age!, weight!, height!, bmi!, duration!,id!,calories!);
                                     Navigator.pop(context);
                                   }
                                 }, child: Text("Submit")))

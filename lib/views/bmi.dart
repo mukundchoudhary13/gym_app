@@ -143,14 +143,10 @@ class _BmiPageState extends State<BmiPage> {
                         child: Column(children: [
                           Image.asset(
                             "assets/bmi.png",
-
                             fit: BoxFit.fitWidth,
-
                           ),
-
                         ],),
                       ),),
-
                   ],
                 ),
 
